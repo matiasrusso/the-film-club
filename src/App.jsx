@@ -1,10 +1,18 @@
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {Home} from './pages';
-import {MoviesSeries} from './pages';
+import {Home, MoviesSeries, Details, Favourites} from './pages';
 import {Navbar} from './components';
-import {Details} from './pages';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {startLoadingMovies} from './store/slices/thunk.js';
 
 export const App = () => {
+
+	const dispatch = useDispatch()
+	const {data} = useSelector(store => store.movie)
+
+	useEffect(() => {
+		dispatch(startLoadingMovies())
+	}, [])
 
 	return (
 		<>
@@ -18,6 +26,8 @@ export const App = () => {
 
 				<Route path={`/series`} element={<MoviesSeries title="Series" type="tv" />} />
 				<Route path={`/series/:id`} element={<Details />} />
+
+				<Route path="/favourites" element={<Favourites />} />
 
 				<Route path="/*" element={<Navigate to="/" />} />
 			</Routes>

@@ -5,12 +5,8 @@ import {Card, LoadingSpinner} from '../components';
 import {CardList} from '../components/CardList.jsx';
 
 export const MoviesSeries = ({ title, type }) => {
-	const dispatch = useDispatch()
-	const {isLoading, data} = useSelector(store => store.movie)
 
-	useEffect(() => {
-		dispatch(startLoadingMovies(type))
-	}, [type])
+	const {isLoading, data} = useSelector(store => store.movie)
 
 	const filteredData = useMemo(() => (
 		data.filter((item) => {

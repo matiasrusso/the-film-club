@@ -21,6 +21,9 @@ export const Navbar = () => {
 								<li className="navbar-link">
 									<NavLink to="/series" className={ ({isActive}) => `${(isActive) ? 'active' : ''}`} >Series</NavLink>
 								</li>
+								<li className="navbar-link">
+									<NavLink to="/favourites" className={ ({isActive}) => `${(isActive) ? 'active' : ''}`} >Favoritos</NavLink>
+								</li>
 							</ul>
 						</div>
 					</div>
