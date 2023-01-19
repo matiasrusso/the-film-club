@@ -1,7 +1,25 @@
-import {NavLink} from 'react-router-dom';
-import {LoadingSpinner, Container} from '../components';
+import {NavLink, useNavigate} from 'react-router-dom';
+import {Container} from '../components';
+import {useState} from 'react';
 
 export const Navbar = () => {
+
+	const navigate = useNavigate()
+
+	const [searchText, setSearchText] = useState({
+		searchText: ''
+	})
+
+	const onFormSubmit = (e) => {
+		e.preventDefault()
+
+		navigate(`/search?q=${searchText}`)
+	}
+
+	const onInputChange = ({target}) => {
+		setSearchText(target.value)
+	}
+
 	return (
 		<>
 			<div className="navbar">
@@ -23,6 +41,16 @@ export const Navbar = () => {
 								</li>
 								<li className="navbar-link">
 									<NavLink to="/favourites" className={ ({isActive}) => `${(isActive) ? 'active' : ''}`} >Favoritos</NavLink>
+								</li>
+								<li className="navbar-form">
+									<form onSubmit={onFormSubmit}>
+										<input
+											type="search"
+											value={searchText.value}
+											onChange={onInputChange}
+										/>
+										<button type="submit">Buscar</button>
+									</form>
 								</li>
 							</ul>
 						</div>

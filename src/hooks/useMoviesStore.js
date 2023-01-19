@@ -1,5 +1,5 @@
-import {setFavourite} from '../../src/store/slices/movieSlice.js';
 import {useDispatch} from 'react-redux';
+import {setFavourite, startLoadingMovie, startSearching} from '../store';
 
 export const useMoviesStore = () => {
 
@@ -20,7 +20,17 @@ export const useMoviesStore = () => {
 		dispatch(setFavourite(id))
 	}
 
+	const handleActiveFilm = (type, id) => {
+		dispatch(startLoadingMovie(type, id))
+	}
+
+	const handleSearch = (query) => {
+		dispatch(startSearching(query))
+	}
+
 	return {
-		handleFavourites
+		handleFavourites,
+		handleActiveFilm,
+		handleSearch
 	}
 }

@@ -4,6 +4,8 @@ export const movieSlice = createSlice({
 	name: 'movie',
 	initialState: {
 		data: [],
+		searchData: [],
+		activeFilm: null,
 		isLoading: false,
 		favourites: JSON.parse(localStorage.getItem("favouritesMovies")) || []
 	},
@@ -12,11 +14,12 @@ export const movieSlice = createSlice({
 			state.isLoading = true
 		},
 		setData: (state, {payload}) => {
-			state.data = payload
+			state.data = payload;
 			state.isLoading = false
 		},
 		setFavourite: (state, {payload}) => {
 			state.favourites = JSON.parse(localStorage.getItem("favouritesMovies")) || [];
+
 			state.data = state.data.map((item) => {
 				if (item.id === payload) {
 					return {
@@ -27,6 +30,21 @@ export const movieSlice = createSlice({
 
 				return item
 			})
+
+			state.activeFilm = {
+				...state.activeFilm,
+				isFavourite: (state.favourites.includes(payload))
+			}
+
+			state.isLoading = false
+		},
+		setActiveFilm: (state, {payload}) => {
+			state.activeFilm = payload;
+			state.isLoading = false
+		},
+		setSearchdata: (state, {payload}) => {
+			state.searchData = payload;
+			state.isLoading = false
 		}
 	}
 });
@@ -34,5 +52,7 @@ export const movieSlice = createSlice({
 export const {
 	setData,
 	setLoading,
-	setFavourite
+	setFavourite,
+	setActiveFilm,
+	setSearchdata
 } = movieSlice.actions;

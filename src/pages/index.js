@@ -1,4 +1,6 @@
 export * from './Home';
 export * from './Details';
-export * from './MoviesSeries';
+export * from './Films.jsx';
 export * from './Favourites';
+export * from './DataSheet';
+export * from './Search';

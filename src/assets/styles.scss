@@ -15,13 +15,31 @@ $desktopMediaQuery: 800px;
 	}
 }
 
+@mixin underlineBar() {
+	&::before {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 0;
+		margin-top: 5px;
+		width: 100%;
+		height: 3px;
+		border-radius: 20px;
+		background: $primary
+	}
+}
+
 html,
 body {
 	margin: 0;
 	padding: 0;
-	font-family: 'Raleway';
+	font-family: 'Raleway', arial;
 	background: $siteBackground;
-	color: $siteColor
+	color: $siteColor;
+}
+
+* {
+	box-sizing: border-box
 }
 
 a {
@@ -83,18 +101,7 @@ ul {
 
 		.active {
 			color: $primary;
-
-			&::before {
-				content: '';
-				position: absolute;
-				top: 100%;
-				left: 0;
-				margin-top: 5px;
-				width: 100%;
-				height: 3px;
-				border-radius: 20px;
-				background: $primary
-			}
+			@include underlineBar()
 		}
 
 		a {
@@ -107,33 +114,66 @@ ul {
 	}
 }
 
-.loading-spinner {
-	width: 50px;
-	height: 50px;
-	border: 10px solid $primary;
-	border-top: 10px solid #383636;
-	border-radius: 50%;
-	animation: spinner 1s linear infinite;
+.spinner {
+	&-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 40vh;
+	}
+
+	&-loading {
+		width: 50px;
+		height: 50px;
+		border: 10px solid $primary;
+		border-top: 10px solid #383636;
+		border-radius: 50%;
+
+		animation: spinner 1s linear infinite;
+	}
+}
+
+.message {
+	text-align: center;
+	margin-top: 6rem
+}
+
+.page-title {
+	display: table;
+	margin: 30px auto;
+	padding: 5px 0;
+	position: relative;
+	@include underlineBar()
 }
 
 .card {
 	position: relative;
 	background: $siteBackground;
-	max-width: 500px;
 	width: 100%;
 	overflow: hidden;
 	border-radius: 5px;
 	box-shadow: 0 2px 5px $primary_rgba;
+	margin: auto;
+	max-width: 500px;
 
 	@media (min-width: $desktopMediaQuery) {
-		max-width: 570px;
+		max-width: 570px
 	}
 
 	&-list {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 30px
+		gap: 30px;
+		padding: 0 15px;
+
+		li {
+			width: 100%;
+
+			@media (min-width: $desktopMediaQuery) {
+				width: auto;
+			}
+		}
 	}
 
 	&-wrapper {
@@ -141,7 +181,7 @@ ul {
 
 		@media (min-width: $desktopMediaQuery) {
 			padding-top: 0;
-			padding-left: 50%
+			padding-left: 300px
 		}
 	}
 
@@ -162,11 +202,13 @@ ul {
 
 	&-title {
 		font-size: 1.4rem;
-		margin-top: 0
+		margin-top: 0;
+		height: 55px;
 	}
 
 	&-description {
-		font-size: 0.9rem
+		font-size: 0.9rem;
+		height: 120px;
 	}
 
 	&-info {
@@ -176,12 +218,12 @@ ul {
 		position: relative;
 		padding: 60px 30px;
 		background: url('/imgs/card-blur-top.png') center no-repeat;
-		background-size: 100% 133%;
+		background-size: 100% 135%;
 
 		@media (min-width: $desktopMediaQuery) {
 			padding: 30px 30px;
 			background-image: url('/imgs/card-blur-left.png');
-			background-size: 145% 100%
+			background-size: 145% 101%
 		}
 
 		&-controls {
@@ -195,19 +237,21 @@ ul {
 			line-height: 150%
 		}
 	}
+}
 
-	&-vote {
-		color: $primary;
-		text-align: center;
+.vote {
+	color: $primary;
+	text-align: center;
+	display: block;
 
-		strong {
-			font-size: 1.3rem;
-			display: block
-		}
+	strong {
+		font-size: 1.3rem;
+		display: block
 	}
 }
 
 .button {
+	cursor: pointer;
 	color: white;
 	background-color: $primary;
 	text-align: center;
@@ -236,5 +280,110 @@ ul {
 
 	i {
 		line-height: 17px
+	}
+}
+
+.detail {
+	h1,
+	&-genres ul,
+	.vote {
+		text-align: center;
+		justify-content: center;
+	}
+
+	&-wrapper {
+		position: relative;
+		padding: 0 15px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+
+		@media (min-width: $desktopMediaQuery) {
+			flex-wrap: nowrap
+		}
+	}
+
+	&-info {
+		@media (min-width: $desktopMediaQuery) {
+			max-width: 60%;
+			padding-right: 50px
+		}
+
+		& > div {
+			margin-top: 40px
+		}
+
+		&-wrapper {
+			@media (min-width: $desktopMediaQuery) {
+				display: flex;
+				justify-content: space-between;
+				gap: 15px
+			}
+		}
+	}
+
+	&-poster {
+		max-width: 600px;
+		padding: 60px;
+		position: relative;
+		display: inline-block;
+
+		&-content {
+			@media (min-width: $desktopMediaQuery) {
+				order: 1
+			}
+		}
+
+		&-bg {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			filter: blur(20px);
+			border-radius: 5px;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			box-shadow: 0 0 20px $siteBackground
+		}
+	}
+
+	img {
+		border-radius: 5px;
+		width: 100%;
+		position: relative;
+		box-shadow: 0 0 80 100px white inset;
+	}
+
+	&-genres {
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px
+		}
+
+		li {
+			background: $primary;
+			color: $siteBackground;
+			font-weight: 500;
+			padding: 5px 8px;
+			border-radius: 3px
+		}
+	}
+
+	&-title {
+		padding: 40px 0;
+
+		h1 {
+			width: 100%;
+			display: inline-block;
+			margin: 0;
+			font-weight: 900
+		}
+	}
+
+	&-overview {
+		line-height: 150%
 	}
 }

@@ -1,12 +1,12 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
+import {CardList, Message} from '../components';
 
 export const Favourites = () => {
 
 	const {data, favourites} = useSelector(store => store.movie)
 
 	const favouritesList = useMemo(() => {
-		console.log('hola')
 		return data.filter((item) => {
 			return item.isFavourite === true
 		})
@@ -14,11 +14,13 @@ export const Favourites = () => {
 
 	return (
 		<div>
-			<h1>Favoritos</h1>
+			<h1 className="page-title">Favoritos</h1>
 
 			<ul>
 				{
-					favouritesList.map(item => <li key={item.id}>{item.title}</li>)
+					(favouritesList.length > 0)
+						? <CardList data={favouritesList} />
+						: <Message title="No hay películas ni series guardadas" />
 				}
 			</ul>
 		</div>
