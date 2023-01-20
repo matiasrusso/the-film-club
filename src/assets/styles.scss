@@ -4,16 +4,7 @@ $primary: #13C6B3;
 $primary-rgba: rgba(19,198,179, 0.2);
 $primary-hover: #0d796c;
 
-$desktopMediaQuery: 800px;
-
-@keyframes spinner {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}
+$desktopBreakPoint: 800px;
 
 @mixin underlineBar() {
 	&::before {
@@ -26,6 +17,33 @@ $desktopMediaQuery: 800px;
 		height: 3px;
 		border-radius: 20px;
 		background: $primary
+	}
+}
+
+@mixin iconButton() {
+	font-size: 1.3rem;
+	padding: 10px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
 	}
 }
 
@@ -53,6 +71,17 @@ ul {
 	list-style: none
 }
 
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0
+}
+
 .container {
 	max-width: 1170px;
 	margin: auto;
@@ -71,10 +100,31 @@ ul {
 	display: flex;
 	align-items: center;
 
-	p {
+	img {
+		width: 30px;
+
+		@media (min-width: $desktopBreakPoint) {
+			width: 40px;
+		}
+	}
+
+	a {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-weight: 900;
 		color: $primary;
-		font-size: 1.5rem;
+		font-size: 1.0rem;
 		margin: 0;
+		transition: color 0.2s;
+
+		@media (min-width: $desktopBreakPoint) {
+			font-size: 1.5rem;
+		}
+
+		&:hover {
+			color: $siteColor
+		}
 	}
 }
 
@@ -88,16 +138,27 @@ ul {
 	}
 
 	&-links {
+		flex-shrink: 0;
 		text-align: center
 	}
+}
 
-	&-link {
-		font-size: 1.2rem;
+
+.navbar,
+.filter-nav {
+	position: relative;
+
+	.navbar-link {
+		font-size: 1.0rem;
 		display: inline-block;
 		vertical-align: middle;
 		margin: 0 10px;
 		font-weight: normal;
 		position: relative;
+
+		@media (min-width: $desktopBreakPoint) {
+			font-size: 1.2rem;
+		}
 
 		.active {
 			color: $primary;
@@ -112,6 +173,11 @@ ul {
 			}
 		}
 	}
+}
+
+.filter-nav {
+	text-align: center;
+	padding: 25px 0
 }
 
 .spinner {
@@ -156,7 +222,7 @@ ul {
 	margin: auto;
 	max-width: 500px;
 
-	@media (min-width: $desktopMediaQuery) {
+	@media (min-width: $desktopBreakPoint) {
 		max-width: 570px
 	}
 
@@ -170,7 +236,7 @@ ul {
 		li {
 			width: 100%;
 
-			@media (min-width: $desktopMediaQuery) {
+			@media (min-width: $desktopBreakPoint) {
 				width: auto;
 			}
 		}
@@ -179,10 +245,26 @@ ul {
 	&-wrapper {
 		padding-top: 50%;
 
-		@media (min-width: $desktopMediaQuery) {
+		@media (min-width: $desktopBreakPoint) {
 			padding-top: 0;
 			padding-left: 300px
 		}
+	}
+
+	&-media-type {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		color: $siteColor;
+		z-index: 2;
+		background: $primary;
+		border-radius: 20px;
+		padding: 3px 7px;
+		font-size: 11px;
+		text-transform: uppercase;
+		font-weight: 600;
+		text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+		box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7)
 	}
 
 	&-image {
@@ -190,14 +272,31 @@ ul {
 		top: 0;
 		left: 0;
 		width: 100%;
+		height: 100%;
+
+		&-placeholder {
+			background-image: linear-gradient(to right, $primary 0, $siteBackground 100%);
+			height: 100%;
+
+			&::before {
+				content: '';
+				background: url('/imgs/film-roll.png') left center no-repeat;
+				background-size: auto 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 
 	img {
 		width: 100%;
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%)
+		top: -130px;
+		left: calc(50% - 1px);
+		transform: translate(-50%, 0)
 	}
 
 	&-title {
@@ -220,10 +319,10 @@ ul {
 		background: url('/imgs/card-blur-top.png') center no-repeat;
 		background-size: 100% 135%;
 
-		@media (min-width: $desktopMediaQuery) {
-			padding: 30px 30px;
+		@media (min-width: $desktopBreakPoint) {
+			padding: 50px 30px 30px;
 			background-image: url('/imgs/card-blur-left.png');
-			background-size: 145% 101%
+			background-size: 134% 101%
 		}
 
 		&-controls {
@@ -239,56 +338,17 @@ ul {
 	}
 }
 
-.vote {
-	color: $primary;
-	text-align: center;
-	display: block;
-
-	strong {
-		font-size: 1.3rem;
-		display: block
-	}
-}
-
-.button {
-	cursor: pointer;
-	color: white;
-	background-color: $primary;
-	text-align: center;
-	padding: 11px 20px;
-	font-weight: 600;
-	text-transform: uppercase;
-	border-radius: 20px;
-	font-size: 0.9rem;
-	border: none;
-	transition: background 0.2s;
-
-	&:hover {
-		background-color: $primary-hover
-	}
-}
-
-.favourite-button {
-	font-size: 1.3rem;
-	padding: 10px;
-	z-index: 1;
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	display: flex;
-	align-items: center;
-
-	i {
-		line-height: 17px
-	}
-}
-
 .detail {
 	h1,
 	&-genres ul,
 	.vote {
 		text-align: center;
 		justify-content: center;
+	}
+
+	.favourite-button {
+		left: initial;
+		right: 10px
 	}
 
 	&-wrapper {
@@ -298,13 +358,13 @@ ul {
 		flex-wrap: wrap;
 		justify-content: center;
 
-		@media (min-width: $desktopMediaQuery) {
+		@media (min-width: $desktopBreakPoint) {
 			flex-wrap: nowrap
 		}
 	}
 
 	&-info {
-		@media (min-width: $desktopMediaQuery) {
+		@media (min-width: $desktopBreakPoint) {
 			max-width: 60%;
 			padding-right: 50px
 		}
@@ -314,7 +374,7 @@ ul {
 		}
 
 		&-wrapper {
-			@media (min-width: $desktopMediaQuery) {
+			@media (min-width: $desktopBreakPoint) {
 				display: flex;
 				justify-content: space-between;
 				gap: 15px
@@ -329,7 +389,7 @@ ul {
 		display: inline-block;
 
 		&-content {
-			@media (min-width: $desktopMediaQuery) {
+			@media (min-width: $desktopBreakPoint) {
 				order: 1
 			}
 		}
@@ -353,7 +413,7 @@ ul {
 		border-radius: 5px;
 		width: 100%;
 		position: relative;
-		box-shadow: 0 0 80 100px white inset;
+		box-shadow: 0 0 10px rgb(0, 0, 0, 0.7)
 	}
 
 	&-genres {
@@ -386,4 +446,120 @@ ul {
 	&-overview {
 		line-height: 150%
 	}
+}
+
+.vote {
+	color: $primary;
+	text-align: center;
+	display: block;
+
+	strong {
+		font-size: 1.3rem;
+		display: block
+	}
+}
+
+.button {
+	cursor: pointer;
+	color: $siteColor;
+	background-color: $primary;
+	text-align: center;
+	padding: 11px 20px;
+	font-weight: 600;
+	text-transform: uppercase;
+	border-radius: 20px;
+	font-size: 0.9rem;
+	border: none;
+	transition: background 0.2s;
+
+	&:hover {
+		background-color: $primary-hover
+	}
+}
+
+.back-button {
+	@include iconButton();
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	padding: 8px 10px;
+}
+
+.favourite-button {
+	@include iconButton();
+	position: absolute;
+	top: 10px;
+	left: 10px;
+
+	i {
+		line-height: 17px
+	}
+}
+
+.badge {
+	color: $siteColor;
+	font-size: 13.5px;
+	background: $primary;
+	padding: 3px 5px;
+	border-radius: 20px;
+	line-height: 100%;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translate(0, -50%);
+	font-weight: bold;
+
+	&-container {
+		padding-right: 30px
+	}
+}
+
+.navbar-form {
+	display: flex;
+	margin-top: 20px;
+	padding: 20px 0;
+	justify-content: center;
+}
+
+.searchform {
+	max-width: 400px;
+	display: table;
+	width: 100%;
+
+	&-button {
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translate(0, -50%);
+		cursor: pointer;
+		font-size: 1rem;
+		background: $primary;
+		color: $siteColor;
+		padding: 9px 10px;
+		border-radius: 20px;
+		border: none;
+		transition: background 0.2s;
+
+		&:hover {
+			background: $primary-hover
+		}
+	}
+
+	&-field {
+		width: 100%;
+		border: 1px solid $primary;
+		border-radius: 3px;
+		outline: none;
+		font-size: 1rem;
+		padding: 9px 40px 9px 10px;
+		border-radius: 20px
+	}
+
+	&-content {
+		position: relative;
+	}
+}
+
+.fadeIn {
+	animation: 0.5s ease-in alternate fadeIn;
 }

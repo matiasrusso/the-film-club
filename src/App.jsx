@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {Navbar} from './components';
+import {PageNavbar} from './components';
 import {startLoadingMovies} from './store';
 import {Router as PageRouter} from './routes';
 
@@ -14,7 +14,7 @@ export const App = () => {
 
 	return (
 		<>
-			<Navbar />
+			<PageNavbar />
 
 			<PageRouter />
 		</>

@@ -13,7 +13,7 @@ export const Favourites = () => {
 	}, [data, favourites])
 
 	return (
-		<div>
+		<div className="fadeIn">
 			<h1 className="page-title">Favoritos</h1>
 
 			<ul>

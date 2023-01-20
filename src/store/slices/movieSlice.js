@@ -42,7 +42,7 @@ export const movieSlice = createSlice({
 			state.activeFilm = payload;
 			state.isLoading = false
 		},
-		setSearchdata: (state, {payload}) => {
+		setSearchData: (state, {payload}) => {
 			state.searchData = payload;
 			state.isLoading = false
 		}
@@ -54,5 +54,5 @@ export const {
 	setLoading,
 	setFavourite,
 	setActiveFilm,
-	setSearchdata
+	setSearchData
 } = movieSlice.actions;

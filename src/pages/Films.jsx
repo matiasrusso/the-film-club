@@ -1,26 +1,29 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import {LoadingSpinner} from '../components';
-import {CardList} from '../components';
+import {LoadingSpinner, Message, CardList} from '../components';
 
-export const Films = ({ title, media_type }) => {
+export const Films = ({media_type = null}) => {
 
 	const {isLoading, data} = useSelector(store => store.movie)
 
-	const filteredData = useMemo(() => (
-		data.filter((item) => {
-			return item.media_type === media_type
-		})
-	), [media_type, data])
+	const filteredData = useMemo(() => {
+		if (!!media_type) {
+			return data.filter((item) => (
+				item.media_type === media_type
+			))
+		}
+
+		return data
+	}, [media_type, data])
 
 	return (
 		<>
-			<h1 className="page-title">{title}</h1>
-
 			{
 				(isLoading)
 				? <LoadingSpinner />
-				: <CardList data={filteredData} />
+				: (filteredData.length !== 0)
+					? <CardList data={filteredData} />
+					: <Message title={`Ups! Ha ocurrido un error. Por favor intentalo nuevamente.`} />
 			}
 		</>
 	)

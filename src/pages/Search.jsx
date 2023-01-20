@@ -3,11 +3,11 @@ import {useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import queryString from 'query-string'
 import {useMoviesStore} from '../hooks';
-import {CardList} from '../components';
+import {CardList, FilterNavbar, LoadingSpinner, Message} from '../components';
 
 export const Search = () => {
 
-	const {searchData} = useSelector(store => store.movie)
+	const {searchData, isLoading} = useSelector(store => store.movie)
 	const {search} = useLocation()
 	const {handleSearch} = useMoviesStore()
 
@@ -19,7 +19,15 @@ export const Search = () => {
 
 	return (
 		<div>
-			<CardList data={searchData} />
+			<FilterNavbar />
+
+			{
+				(isLoading)
+					? <LoadingSpinner />
+					: (searchData.length !== 0)
+						? <CardList data={searchData} />
+						: <Message title={`No se encontraron resultados para "${q}"`} />
+			}
 		</div>
 	)
 }

@@ -1,5 +1,5 @@
 import {movieDatabaseApi} from '../../api/api';
-import {setLoading, setData, setActiveFilm, setSearchdata} from '../../store';
+import {setLoading, setData, setActiveFilm, setSearchData} from '../../store';
 import {dataResolver, objectConverter} from '../../helpers';
 
 export const startLoadingMovies = () => {
@@ -8,18 +8,16 @@ export const startLoadingMovies = () => {
 		dispatch(setLoading())
 
 		try {
-			const tv = await movieDatabaseApi.get(`/tv/popular`)
-			const movie = await movieDatabaseApi.get(`/movie/popular`)
+			const tvResults = await movieDatabaseApi.get(`/tv/popular`)
+			const movieResults = await movieDatabaseApi.get(`/movie/popular`)
 
-			const resolvedTv = dataResolver(tv, 'tv', getState().movie)
-			const resolvedMovie = dataResolver(movie, 'movie', getState().movie)
+			const resolvedTv = dataResolver(tvResults.data.results, 'tv', getState().movie)
+			const resolvedMovie = dataResolver(movieResults.data.results, 'movie', getState().movie)
 
 			const data = resolvedTv.concat(resolvedMovie)
 
 			dispatch(setData(data))
 		} catch(error) {
-
-			console.log(error)
 			dispatch(setData(null))
 		}
 	}
@@ -38,13 +36,13 @@ export const startLoadingMovie = (media_type, id) => {
 			dispatch(setActiveFilm(film))
 
 		} catch(error) {
-			console.log(error)
+			dispatch(setActiveFilm(null))
 		}
 	}
 }
 
 export const startSearching = (query) => {
-	return async(dispatch) => {
+	return async(dispatch, getState) => {
 
 		dispatch(setLoading())
 
@@ -55,11 +53,11 @@ export const startSearching = (query) => {
 				}
 			})
 
-			console.log(results)
+			const data = dataResolver(results, null, getState().movie)
 
-			dispatch(setSearchdata(results))
-		} catch (e) {
-			console.log(e)
+			dispatch(setSearchData(data))
+		} catch (error) {
+			dispatch(setSearchData(null))
 		}
 	}
 }
