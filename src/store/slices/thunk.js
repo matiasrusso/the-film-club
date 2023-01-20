@@ -25,15 +25,15 @@ export const startLoadingMovies = () => {
 	}
 }
 
-export const startLoadingMovie = (type, id) => {
+export const startLoadingMovie = (media_type, id) => {
 	return async(dispatch, getState) => {
 
 		dispatch(setLoading())
 
 		try {
-			const {data} = await movieDatabaseApi.get(`/${type}/${id}`)
+			const {data} = await movieDatabaseApi.get(`/${media_type}/${id}`)
 
-			const film = objectConverter(data, type, getState().movie)
+			const film = objectConverter(data, media_type, getState().movie)
 
 			dispatch(setActiveFilm(film))
 

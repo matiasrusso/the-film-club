@@ -20,8 +20,8 @@ export const useMoviesStore = () => {
 		dispatch(setFavourite(id))
 	}
 
-	const handleActiveFilm = (type, id) => {
-		dispatch(startLoadingMovie(type, id))
+	const handleActiveFilm = (media_type, id) => {
+		dispatch(startLoadingMovie(media_type, id))
 	}
 
 	const handleSearch = (query) => {

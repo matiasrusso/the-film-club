@@ -3,15 +3,15 @@ import {useSelector} from 'react-redux';
 import {LoadingSpinner} from '../components';
 import {CardList} from '../components';
 
-export const Films = ({ title, type }) => {
+export const Films = ({ title, media_type }) => {
 
 	const {isLoading, data} = useSelector(store => store.movie)
 
 	const filteredData = useMemo(() => (
 		data.filter((item) => {
-			return item.type === type
+			return item.media_type === media_type
 		})
-	), [type, data])
+	), [media_type, data])
 
 	return (
 		<>

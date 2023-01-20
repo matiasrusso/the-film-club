@@ -1,17 +1,17 @@
-export const objectConverter = (data, type, {favourites}) => {
+export const objectConverter = (data, media_type, {favourites}) => {
 	return {
 		...data,
 		title: data.title || data.name,
-		type: type,
+		media_type: media_type,
 		isFavourite: (favourites.includes(data.id))
 	}
 }
 
-export const dataResolver = (data, type, favourites) => {
+export const dataResolver = (data, media_type, favourites) => {
 	const arrayData = [];
 
 	data.data.results.map((data) => {
-		arrayData.push(objectConverter(data, type, favourites))
+		arrayData.push(objectConverter(data, media_type, favourites))
 	})
 
 	return arrayData

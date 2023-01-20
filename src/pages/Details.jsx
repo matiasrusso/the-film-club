@@ -5,13 +5,13 @@ import {useMoviesStore} from '../hooks';
 import {LoadingSpinner, Message} from '../components';
 import {DataSheet} from '../pages';
 
-export const Details = ({type}) => {
+export const Details = ({media_type}) => {
 	const {id} = useParams();
 	const {activeFilm, isLoading} = useSelector(store => store.movie)
 	const {handleActiveFilm} = useMoviesStore();
 
 	useEffect(() => {
-		handleActiveFilm(type, id)
+		handleActiveFilm(media_type, id)
 	}, [])
 
 	return (
