@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {setFavourite, startLoadingMovie, startSearching} from '../store';
+import {setFavourite, startLoadingMovie, startLoadingMovies, startSearching} from '../store';
 
 export const useMoviesStore = () => {
 
@@ -24,13 +24,18 @@ export const useMoviesStore = () => {
 		dispatch(startLoadingMovie(media_type, id))
 	}
 
-	const handleSearch = (query) => {
-		dispatch(startSearching(query))
+	const handleSearch = (query, page = 1) => {
+		dispatch(startSearching(query, page))
+	}
+
+	const handleLoadMovies = (page = 1) => {
+		dispatch(startLoadingMovies(page))
 	}
 
 	return {
 		handleFavourites,
 		handleActiveFilm,
-		handleSearch
+		handleSearch,
+		handleLoadMovies
 	}
 }

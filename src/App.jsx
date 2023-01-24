@@ -1,15 +1,14 @@
 import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
 import {PageNavbar} from './components';
-import {startLoadingMovies} from './store';
 import {Router as PageRouter} from './routes';
+import {useMoviesStore} from './hooks';
 
 export const App = () => {
 
-	const dispatch = useDispatch()
+	const {handleLoadMovies} = useMoviesStore()
 
 	useEffect(() => {
-		dispatch(startLoadingMovies())
+		handleLoadMovies()
 	}, [])
 
 	return (

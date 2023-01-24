@@ -5,7 +5,7 @@ import {FavButton} from '../components';
 export const Card = ({id, title, overview = '', poster_path, vote_average, isFavourite, media_type}) => {
 
 	return (
-		<div className="card" data-id={id}>
+		<div className="card fadeIn" data-id={id}>
 			<div className="card-wrapper">
 				<div className="card-media-type">
 					<span>{

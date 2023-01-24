@@ -14,13 +14,27 @@ export const movieSlice = createSlice({
 			state.isLoading = true
 		},
 		setData: (state, {payload}) => {
-			state.data = payload;
+			state.data = [
+				...state.data,
+				...payload
+			];
 			state.isLoading = false
 		},
 		setFavourite: (state, {payload}) => {
 			state.favourites = JSON.parse(localStorage.getItem("favouritesMovies")) || [];
 
 			state.data = state.data.map((item) => {
+				if (item.id === payload) {
+					return {
+						...item,
+						isFavourite: (state.favourites.includes(payload))
+					}
+				}
+
+				return item
+			})
+
+			state.searchData = state.searchData.map((item) => {
 				if (item.id === payload) {
 					return {
 						...item,
